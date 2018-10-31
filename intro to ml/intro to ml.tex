@@ -1,0 +1,117 @@
+\documentclass{article}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+
+\title{intro to machine learning}
+\author{zhangyifeng}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Intro}
+	\subsection{Course Requirements and Grading}
+		\subsubsection*{Lab(30\%)}
+			- Python\\
+ 			- Synthetic data\\
+			- 2 deliverables, distributed over moodle
+
+		\subsubsection*{Theory exercises(0/20)}
+			close to the end(early December)
+
+		\subsubsection*{Final exam(70\%)}
+			- Theory questions(judgement-oriented)\\
+			- Simulate running algorithms by hand
+
+		\subsubsection*{Meeting hours}
+			- Office: 104B, 68-72 Gower street\\
+			- Meeting hours: Tuesday, 14:00-15:00
+
+		\subsubsection*{Prerequisites}
+			Linear Algebra; Calculus; Probability; Programming
+
+	\subsection{Course}
+		\subsubsection*{Machine Learning}
+			data -> maodel ->prediction
+
+		\subsubsection*{Least squares model}
+			- least squares solution for linear regression\\
+			- Least squares solution for generalized linear regression\\
+			- Least squares solution for  ridge regression
+
+		\subsubsection*{notation}
+			$\bm{D}$: probleim dimension, e.g. 1D, 2D( can visualize)\\
+			$\bm N$: training set size\\
+			Training set: input-output pairs $S=\{\bm x_{i},y_{i}\},i=1,\dots,N $ where,$\bm x_{i}=\{x_{i1},\dots,x_{iD}\}^{T}\in \mathbb{R}^{D},y_{i}\in \mathbb{R}$, generally can be $\bm x$\\
+			$\bm w$: weight, $\bm w=\{w_{1},\dots,w_{D}\}^{T}\in \mathbb{R}^{D}$\\
+			$\epsilon_{i}$: noise \\
+			$X=\{ {x_{1}, x_{2}, \dots, x_{N}} \}^{T} = \{ {x_{1}^{T}; x_{2}^{T}; \dots; x_{N}^{T}} \}$\\
+			Remark: ";" represent column vector\\
+			$\bm y=\{y_{1},\dots,y_{N}\}^{T}$\\
+			$\bm \epsilon=\{\epsilon_{1},\dots,\epsilon_{N} \}^{T}$: residuals vectors
+
+		\subsubsection*{linear regression model}
+			$$
+			\bm y=X\bm w+\epsilon
+			\quad  or \quad \bm y^{T}=\bm w^{T}X^{T}+\bm \epsilon^{T}
+			$$
+			that is $y_{i}=\bm x_{i}^{T} \bm w +\epsilon_{i}, or \ y_{i}=\bm w^{T}\bm x_{i}+\epsilon_{i},i=1,\dots,N$\\
+			Loss function: $L(w)=\sum_{i=1}^{N}(y_{i}-\bm w^{T}x_{i})^{2}$\\
+			goal: $\min\limits_{w} \  L(w)$
+			Least squares solution for linear regression: $w^{*}=(X^{T}X)^{-1} X^{T}\bm y$
+
+		\subsubsection*{Generalized linear regression model}
+
+			$\bm x \rightarrow [\bm \phi(\bm x)]=[ \phi_{1}(\bm x),\dots,\phi_{M}(\bm x) ]^{T}$, where $\phi_{i}(\bm x),i=1,\dots,M$, $\phi_{i}(\bm x)$ can be other form besides $x_{i}$ ( if $x_{i}$, and $M=D$, it is just the linear regression model)\\
+			If $D=1, and\ \phi_{i}(x)=x^{i-1}$, then it is {\color {red} k-th degree ploynomial fitting}\\
+			If the highest order of $\phi_{i}(\bm x)$ is 2, then it is {\color{red} second-order polynomials fitting}\\
+			set $\Phi=[\bm\phi(\bm{x_{1}})^{T};\bm\phi(\bm{x_{2}})^{T};\dots;\bm\phi(\bm{x_{N}})^{T}]$\\
+			then the model is: 
+			$$
+			\bm y=\Phi\bm w+\bm{\epsilon}
+			$$
+			Least squares solution for generalized linear regression: $ w^{*}=(\Phi^{T}\Phi)^{-1} \Phi^{T}\bm y$
+
+		\subsubsection*{approximations}
+			If $N>D$ (e.g. 30 points, 2 dimensions): overdetermined system\\
+			If $N<D$ (e.g. 30 points, 3000 dimensions): underdetermined system (overfitting)
+		\subsubsection*{How to control complexity (Regularized linear regression)}
+			1.use vector norm (L2, L1, Lp norm) to measure residual vector\\
+			Remark: different norm represent different regularized linear regression, here we use L2 norm\\
+
+			\noindent 2.rewrite loss function: $L(\bm{w})=||\bm{y}-X\bm{w}||^{2}+\lambda||\bm{w}||^{2}$\\
+			this is {\color{red} Ridge regression}, a.k.a, L2-regularized linear regression\\
+			Remark: $\lambda$ is "hyperparameter", select $\lambda$ with cross-validation(use cross-validation for diff values of $\lambda$ -- pick value minimizes cross-validation error)\\
+
+			\noindent Cross-validation: least glorious, most effective of all methods (teacher said)\\
+
+			\noindent 3.Least squares solution for  ridge regression: $w^{*}=(X^{T}X+\lambda\bm{I})^{-1} X^{T}\bm y$
+
+
+	\section{Logistic Regression}
+
+
+		\subsubsection*{Machine Learning variants--Supervised learning}
+			- Classification\\
+            - Regression
+
+		\subsubsection*{Gaussian ( or Normal ) distribution}
+			one-dimensional case\\
+			- Mean $\mu$\\
+			- Variance $\sigma^{2}$\\
+			- Pdf: $\mathcal{N}(x;\mu,\sigma^{2})=\frac{1}{\sqrt{2\pi}\sigma} exp\{-\frac{(\bm x-\bm \mu)^{T}}{2\sigma^{2}}\}​$\\
+
+			\noindent Multi-dimensional case\\
+			- Mean $\bm \mu$\\
+			- Covariance $\bm \Sigma$\\
+			- Pdf: $\mathcal{N}(\bm x;\bm \mu,\bm \Sigma)=\frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2}}\exp(\{-\frac{1}{2}(\bm x-\bm\mu)^{T}\bm\Sigma^{-1}(\bm x-\bm \mu)\})$\\
+			Remark: $|\Sigma|​$ represent matrix norm, e.g. Frobenius norm of $\Sigma$
+
+		\subsubsection*{Parameter estimation}
+			Given: $X=\{x_{1}, x_{2},\dots,x_{N}\}$, parametric form of distribution, parameters $\theta$\\
+			Learning goal: estimate $\theta$\\
+			Likelihood of $\theta$: $L(\theta)=p(X;\theta)=\prod_{n=1}^{N}p(x_{n};\theta)$\\
+			Log-likelihood: $\ln L(\theta)=\sum_{n=1}^{N}\ln p(x_{n};\theta)$\\
+			$\max \ln L(\theta) \Rightarrow \frac{\partial \ln L(\theta)}{\partial\theta}=0 \Rightarrow \hat{\theta}$
+
+\end{document}

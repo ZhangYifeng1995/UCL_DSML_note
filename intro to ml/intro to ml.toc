@@ -1,0 +1,4 @@
+\contentsline {section}{\numberline {1}Intro}{1}
+\contentsline {subsection}{\numberline {1.1}Course Requirements and Grading}{1}
+\contentsline {subsection}{\numberline {1.2}Course}{2}
+\contentsline {section}{\numberline {2}Logistic Regression}{3}
